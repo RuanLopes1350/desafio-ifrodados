@@ -1,0 +1,29 @@
+{
+  "name": "desafio-ifro-dados",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "clean": "rm -rf ./dist node_modules"
+  },
+  "author": "Ruan Lopes",
+  "license": "ISC",
+  "description": "Criado para o desafio de seleção de bolsa para o Projeto 'Ifro Dados'",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.20.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10"
+  }
+}
