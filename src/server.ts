@@ -3,6 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import DbConnect from './config/DbConnect.js';
 import cors from 'cors'
+import projetosRouter from './routes/projetosRoutes.js';
 
 dotenv.config();
 
@@ -15,30 +16,32 @@ app.use(cors({
     origin: '*'
 }));
 
-app.use('/', (req, res) => {
-  res.json({ message: 'Esta é uma resposta da API Ifro Dados...' });
+app.use('/api', projetosRouter)
+
+app.get('/', (req, res) => {
+    res.json({ message: 'A - Gura, Gawr (2020)' });
 });
 
-// Rota 404
 app.use((req, res) => {
     res.status(404).json({ message: 'Rota não encontrada' });
 });
 
-const PORT = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 1350;
 
 async function iniciarServidor() {
     try {
         console.log('\nIniciando...\n');
 
-        // Conecta ao MongoDB
         console.log('Conectando ao banco de dados...');
         await DbConnect.conectar();
 
-        // Inicia o servidor
         app.listen(PORT, async () => {
             console.log(`\nServidor rodando na porta ${PORT}`);
             console.log(`API disponível em: http://localhost:${PORT}/api`);
         });
+
+        console.log()
     } catch (error) {
         console.error('Erro ao iniciar servidor:', error);
         process.exit(1);

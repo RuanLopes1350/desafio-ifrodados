@@ -9,7 +9,6 @@
     "clean": "rm -rf ./dist node_modules"
   },
   "author": "Ruan Lopes",
-  "license": "ISC",
   "description": "Criado para o desafio de seleção de bolsa para o Projeto 'Ifro Dados'",
   "dependencies": {
     "cors": "^2.8.5",
@@ -19,7 +18,8 @@
     "mongoose": "^8.20.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
