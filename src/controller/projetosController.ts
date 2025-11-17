@@ -32,7 +32,7 @@ class ProjetoController {
             if (!nome || !periodoDuracao || !dataLimiteInscricao || !instituicaoCliente || !coordenador) {
                 return res.status(400).json({
                     message: 'Todos os campos são obrigatórios',
-                    error: 'Campos faltando'
+                    error: 'Campos faltando...'
                 })
             }
 

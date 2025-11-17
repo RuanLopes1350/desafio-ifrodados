@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import DbConnect from './config/DbConnect.js';
 import cors from 'cors'
 import projetosRouter from './routes/projetosRoutes.js';
+import usuarioRouter from './routes/usuarioRoutes.js';
+import authRouter from './routes/authRoutes.js';
 
 dotenv.config();
 
@@ -16,7 +18,9 @@ app.use(cors({
     origin: '*'
 }));
 
+app.use('/api', authRouter)
 app.use('/api', projetosRouter)
+app.use('/api', usuarioRouter)
 
 app.get('/', (req, res) => {
     res.json({ message: 'A - Gura, Gawr (2020)' });
