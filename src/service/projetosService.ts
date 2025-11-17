@@ -7,6 +7,16 @@ class ProjetoService {
         this.repository = new ProjetoRepository()
     }
 
+    async listar() {
+        try {
+            const projetos = await this.repository.listar()
+            return projetos
+        } catch (error) {
+            console.error('[projetosService] Erro ao listar projetos:', error)
+            throw error
+        }
+    }
+
     async criar(dados: IProjeto) {
         try {
             const criado = await this.repository.criar(dados)

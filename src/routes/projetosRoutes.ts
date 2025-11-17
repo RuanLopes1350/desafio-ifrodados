@@ -6,5 +6,6 @@ const projetoController = new ProjetoController()
 
 projetosRouter
     .post('/projetos', projetoController.criar.bind(projetoController))
+    .get('/projetos', projetoController.listar.bind(projetoController))
 
 export default projetosRouter

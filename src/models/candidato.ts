@@ -1,10 +1,17 @@
 import mongoose from 'mongoose';
-import { ICandidato, IProjetosAcademicos } from '../interface/models';
+import { ICandidato, IProjetosAcademicosCandidato, IProjetosProfissionaisCandidato } from '../interface/models';
 
 class Candidato {
     model: mongoose.Model<ICandidato>;
     constructor() {
-        const projetosAcademicosSchema = new mongoose.Schema<IProjetosAcademicos>({
+        const projetosAcademicosSchema = new mongoose.Schema<IProjetosAcademicosCandidato>({
+            nome: { type: String, required: true },
+            descricao: { type: String, required: true },
+            duracao: { type: Number, required: true },
+            links: [{ type: String }]
+        });
+
+        const projetosProfissionaisSchema = new mongoose.Schema<IProjetosProfissionaisCandidato>({
             nome: { type: String, required: true },
             descricao: { type: String, required: true },
             duracao: { type: Number, required: true },

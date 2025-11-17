@@ -8,6 +8,23 @@ class ProjetoController {
         this.service = new ProjetoService()
     }
 
+    async listar(req: Request, res: Response) {
+        try {
+            const projetos = await this.service.listar()
+            res.status(200).json({
+                message: 'Projetos listados com sucesso',
+                data: projetos
+            })
+        } catch (error: any) {
+            console.error('[projetosController] Erro ao listar projetos:', error)
+
+            res.status(500).json({
+                message: 'Erro ao listar projetos',
+                error: error.message
+            })
+        }
+    }
+
     async criar(req: Request, res: Response) {
         try {
             const { nome, periodoDuracao, dataLimiteInscricao, instituicaoCliente, coordenador } = req.body

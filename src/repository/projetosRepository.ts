@@ -8,6 +8,16 @@ class ProjetoRepository {
         this.projetoModel = new Projeto().model
     }
 
+    async listar() {
+        try {
+            const projetos = await this.projetoModel.find()
+            return projetos
+        } catch (error) {
+            console.error('[projetosRepository] Erro ao listar projetos:', error)
+            throw error
+        }
+    }
+
     async criar(dados: IProjeto) {
         try {
             const criado = await this.projetoModel.create(dados)
