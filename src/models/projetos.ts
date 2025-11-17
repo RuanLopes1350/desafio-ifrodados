@@ -11,7 +11,7 @@ class Projeto {
             instituicaoCliente: { type: String, required: true },
             coordenador: { type: String, required: true }
         })
-        this.model = mongoose.model('Projeto', projetoSchema);
+        this.model = mongoose.models.Projeto || mongoose.model('Projeto', projetoSchema);
     }
 }
 

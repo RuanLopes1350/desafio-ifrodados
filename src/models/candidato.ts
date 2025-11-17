@@ -26,7 +26,7 @@ class Candidato {
             dataCadastro: { type: Date, default: Date.now() },
             avaliacao: { type: Number, required: false }
         });
-        this.model = mongoose.model('Candidato', candidatoSchema);
+        this.model = mongoose.models.Candidato || mongoose.model('Candidato', candidatoSchema);
     }
 }
 

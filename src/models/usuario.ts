@@ -10,7 +10,7 @@ class Usuario {
             nome: { type: String, required: true },
             funcao: { type: String, required: true, enum: FuncaoUsuario },
         });
-        this.model = mongoose.model('Usuario', usuarioSchema)
+        this.model = mongoose.models.Usuario || mongoose.model('Usuario', usuarioSchema)
     }
 }
 
