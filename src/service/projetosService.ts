@@ -26,6 +26,25 @@ class ProjetoService {
             throw error
         }
     }
+
+    async editar(id: string, dados: Partial<IProjeto>) {
+        try {
+            const atualizado = await this.repository.editar(id, dados)
+            return atualizado
+        } catch (error) {
+            console.error('[projetosService] Erro ao editar projeto:', error)
+            throw error
+        }
+    }
+
+    async deletar(id: string) {
+        try {
+            await this.repository.deletar(id)
+        } catch (error) {
+            console.error('[projetosService] Erro ao deletar projeto:', error)
+            throw error
+        }
+    }
 }
 
 export default ProjetoService

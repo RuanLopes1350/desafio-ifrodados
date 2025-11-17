@@ -59,6 +59,53 @@ class ProjetoController {
             })
         }
     }
+
+    async editar(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const dados: Partial<IProjeto> = req.body
+
+            const projetoAtualizado = await this.service.editar(id, dados)
+
+            if (!projetoAtualizado) {
+                return res.status(404).json({
+                    message: 'Projeto não encontrado',
+                    error: 'ID inválido'
+                })
+            }
+
+            res.status(200).json({
+                message: 'Projeto atualizado com sucesso',
+                data: projetoAtualizado
+            })
+        } catch (error: any) {
+            console.error('[projetosController] Erro ao editar projeto:', error)
+
+            res.status(500).json({
+                message: 'Erro ao editar projeto',
+                error: error.message
+            })
+        }
+    }
+
+    async deletar(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+
+            await this.service.deletar(id)
+
+            res.status(200).json({
+                message: 'Projeto deletado com sucesso'
+            })
+        } catch (error: any) {
+            console.error('[projetosController] Erro ao deletar projeto:', error)
+
+            res.status(500).json({
+                message: 'Erro ao deletar projeto',
+                error: error.message
+            })
+        }
+    }
 }
 
 export default ProjetoController

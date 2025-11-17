@@ -27,6 +27,25 @@ class ProjetoRepository {
             throw error
         }
     }
+
+    async editar(id: string, dados: Partial<IProjeto>) {
+        try {
+            const atualizado = await this.projetoModel.findByIdAndUpdate(id, dados, { new: true })
+            return atualizado
+        } catch (error) {
+            console.error('[projetosRepository] Erro ao editar projeto:', error)
+            throw error
+        }
+    }
+
+    async deletar(id: string) {
+        try {
+            await this.projetoModel.findByIdAndDelete(id)
+        } catch (error) {
+            console.error('[projetosRepository] Erro ao deletar projeto:', error)
+            throw error
+        }
+    }
 }
 
 export default ProjetoRepository
