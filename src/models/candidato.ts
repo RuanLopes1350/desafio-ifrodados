@@ -22,6 +22,7 @@ class Candidato {
             nome: { type: String, required: true },
             email: { type: String, required: true },
             projetosAcademicos: [projetosAcademicosSchema],
+            projetosProfissionais: [projetosProfissionaisSchema],
             estudante: { type: Boolean, required: true },
             dataCadastro: { type: Date, default: Date.now() },
             avaliacao: { type: Number, required: false }
