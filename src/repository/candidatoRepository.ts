@@ -1,0 +1,52 @@
+import mongoose from 'mongoose'
+import Candidato from '../models/candidato'
+import { ICandidato } from '../interface/models'
+
+class CandidatoRepository {
+    private model
+    constructor() {
+        this.model = new Candidato().model
+    }
+
+    async criar(dadosCandidato: ICandidato) {
+        try {
+            const candidatoCriado = await this.model.create(dadosCandidato)
+            return candidatoCriado
+        } catch (error) {
+            console.error('[candidatoRepository] Erro ao criar candidato:', error)
+            throw error
+        }
+    }
+
+    async listar(): Promise<ICandidato> {
+        try {
+            const candidatos: ICandidato | any = await this.model.find()
+            return candidatos
+        } catch (error) {
+            console.error('[candidatoRepository] Erro ao listar candidatos:', error)
+            throw error
+        }
+    }
+
+    async editar(id: string, dadosEditar: Partial<ICandidato>): Promise<Partial<ICandidato>> {
+        try {
+            const usuarioEditado: ICandidato | any = await this.model.findByIdAndUpdate(id, dadosEditar)
+            return usuarioEditado
+        } catch (error) {
+            console.error('[candidatoRepository] Erro ao editar candidatos:', error)
+            throw error
+        }
+    }
+
+    async deletar(id: string) {
+        try {
+            const usuarioDeletado = await this.model.findByIdAndDelete(id)
+            return usuarioDeletado
+        } catch (error) {
+            console.error('[candidatoRepository] Erro ao deletar candidatos:', error)
+            throw error
+        }
+    }
+}
+
+export default CandidatoRepository

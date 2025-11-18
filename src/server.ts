@@ -6,6 +6,7 @@ import cors from 'cors'
 import projetosRouter from './routes/projetosRoutes.js';
 import usuarioRouter from './routes/usuarioRoutes.js';
 import authRouter from './routes/authRoutes.js';
+import candidatoRouter from './routes/candidatoRoutes.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(cors({
 app.use('/api', authRouter)
 app.use('/api', projetosRouter)
 app.use('/api', usuarioRouter)
+app.use('/api', candidatoRouter)
 
 app.get('/', (req, res) => {
     res.json({ message: 'A - Gura, Gawr (2020)' });

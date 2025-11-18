@@ -21,8 +21,8 @@ class Candidato {
         const candidatoSchema = new mongoose.Schema<ICandidato>({
             nome: { type: String, required: true },
             email: { type: String, required: true },
-            projetosAcademicos: [projetosAcademicosSchema],
-            projetosProfissionais: [projetosProfissionaisSchema],
+            projetosAcademicos: { type: [projetosAcademicosSchema], required: false },
+            projetosProfissionais: { type: [projetosProfissionaisSchema], required: false },
             estudante: { type: Boolean, required: true },
             dataCadastro: { type: Date, default: Date.now() },
             avaliacao: { type: Number, required: false }

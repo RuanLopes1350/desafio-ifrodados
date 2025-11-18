@@ -1,0 +1,51 @@
+import CandidatoRepository from "../repository/candidatoRepository";
+import { ICandidato } from "../interface/models";
+
+class CandidatoService {
+    private repository
+    constructor() {
+        this.repository = new CandidatoRepository()
+    }
+
+    async criar(dadosCandidato: ICandidato) {
+        try {
+            const candidatoCriado = await this.repository.criar(dadosCandidato)
+            return candidatoCriado
+        } catch (error) {
+            console.error('[candatoService] Erro ao criar candidato:', error)
+            throw error
+        }
+    }
+
+    async listar() {
+        try {
+            const candidatos = await this.repository.listar()
+            return candidatos
+        } catch (error) {
+            console.error('[candatoService] Erro ao listar candidatos:', error)
+            throw error
+        }
+    }
+
+    async editar(id: string, dadosEditar: Partial<ICandidato>) {
+        try {
+            const candidatoEditado = await this.repository.editar(id, dadosEditar)
+            return candidatoEditado
+        } catch (error) {
+            console.error('[candidatoService] Erro ao editar candidato:', error)
+            throw error
+        }
+    }
+
+    async deletar(id: string) {
+        try {
+            const usuarioDeletado = await this.repository.deletar(id)
+            return usuarioDeletado
+        } catch (error) {
+            console.error('[candidatoService] Erro ao deletar candidato:', error)
+            throw error
+        }
+    }
+}
+
+export default CandidatoService

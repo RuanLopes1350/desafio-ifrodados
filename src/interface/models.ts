@@ -20,8 +20,8 @@ export interface IProjetosProfissionaisCandidato {
 export interface ICandidato {
     nome: string,
     email: string,
-    projetosAcademicos: IProjetosAcademicosCandidato[],
-    projetosProfissionais: IProjetosProfissionaisCandidato[],
+    projetosAcademicos?: IProjetosAcademicosCandidato[],
+    projetosProfissionais?: IProjetosProfissionaisCandidato[],
     estudante: boolean,
     dataCadastro: Date,
     avaliacao?: number
