@@ -2,24 +2,44 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "API Desafio",
-    "description": ""
+    "title": "API Desafio IFRO Dados",
+    "description": "API para gestão de projetos, candidatos e usuários"
   },
   "servers": [
     {
       "url": "http://localhost:1350/api",
-      "description": ""
+      "description": "Servidor de Desenvolvimento"
+    },
+    {
+      "url": "https://seu-dominio-producao.com/api",
+      "description": "Servidor de Produção"
     }
   ],
   "tags": [
     {
-      "name": "",
-      "description": ""
+      "name": "Auth",
+      "description": "Endpoints de autenticação"
+    },
+    {
+      "name": "Candidato",
+      "description": "Endpoints de gerenciamento de candidatos"
+    },
+    {
+      "name": "Projeto",
+      "description": "Endpoints de gerenciamento de projetos"
+    },
+    {
+      "name": "Usuario",
+      "description": "Endpoints de gerenciamento de usuários"
     }
   ],
   "paths": {
     "/auth/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Fazer login",
         "description": "",
         "responses": {
           "200": {
@@ -56,6 +76,10 @@
     },
     "/candidato/": {
       "get": {
+        "tags": [
+          "Candidato"
+        ],
+        "summary": "Listar todos os candidatos",
         "description": "",
         "responses": {
           "200": {
@@ -67,6 +91,10 @@
         }
       },
       "post": {
+        "tags": [
+          "Candidato"
+        ],
+        "summary": "Criar novo candidato",
         "description": "",
         "responses": {
           "201": {
@@ -112,6 +140,10 @@
     },
     "/candidato/{id}": {
       "patch": {
+        "tags": [
+          "Candidato"
+        ],
+        "summary": "Editar candidato",
         "description": "",
         "parameters": [
           {
@@ -136,6 +168,10 @@
         }
       },
       "delete": {
+        "tags": [
+          "Candidato"
+        ],
+        "summary": "Deletar candidato",
         "description": "",
         "parameters": [
           {
@@ -162,6 +198,10 @@
     },
     "/projetos/": {
       "post": {
+        "tags": [
+          "Projeto"
+        ],
+        "summary": "Criar novo projeto",
         "description": "",
         "responses": {
           "201": {
@@ -202,6 +242,10 @@
         }
       },
       "get": {
+        "tags": [
+          "Projeto"
+        ],
+        "summary": "Listar todos os projetos",
         "description": "",
         "responses": {
           "200": {
@@ -215,6 +259,10 @@
     },
     "/projetos/{id}": {
       "patch": {
+        "tags": [
+          "Projeto"
+        ],
+        "summary": "Editar projeto",
         "description": "",
         "parameters": [
           {
@@ -239,6 +287,10 @@
         }
       },
       "delete": {
+        "tags": [
+          "Projeto"
+        ],
+        "summary": "Deletar projeto",
         "description": "",
         "parameters": [
           {
@@ -262,6 +314,10 @@
     },
     "/usuarios/": {
       "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Criar novo usuário",
         "description": "",
         "responses": {
           "201": {
@@ -299,6 +355,10 @@
         }
       },
       "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Listar todos os usuários",
         "description": "",
         "responses": {
           "200": {
@@ -312,6 +372,10 @@
     },
     "/usuarios/{id}": {
       "patch": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Editar usuário",
         "description": "",
         "parameters": [
           {
@@ -336,6 +400,10 @@
         }
       },
       "delete": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Deletar usuário",
         "description": "",
         "parameters": [
           {
