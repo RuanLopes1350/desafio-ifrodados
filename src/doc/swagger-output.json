@@ -56,18 +56,11 @@
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "login": {
-                    "example": "any"
-                  },
-                  "senha": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/Login"
               }
             }
           }
@@ -100,7 +93,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -131,31 +129,17 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "nome": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
-                  "estudante": {
-                    "example": "any"
-                  },
-                  "dataCadastro": {
-                    "example": "any"
-                  },
-                  "projetosAcademicos": {
-                    "example": "any"
-                  },
-                  "projetosProfissionais": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/Candidato"
               }
             }
           }
@@ -558,6 +542,153 @@
             "description": "Internal Server Error"
           }
         }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "example": "string"
+          },
+          "senha": {
+            "type": "string",
+            "example": "string"
+          }
+        }
+      },
+      "Candidato": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "string"
+          },
+          "email": {
+            "type": "string",
+            "example": "string"
+          },
+          "estudante": {
+            "type": "string",
+            "example": "boolean"
+          },
+          "dataCadastro": {
+            "type": "string",
+            "example": "string"
+          },
+          "projetosAcademicos": {
+            "type": "object",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "example": "string"
+              },
+              "descricao": {
+                "type": "string",
+                "example": "string"
+              },
+              "duracao": {
+                "type": "string",
+                "example": "number"
+              },
+              "links": {
+                "type": "array",
+                "example": [
+                  "string"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "projetosProfissionais": {
+            "type": "object",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "example": "string"
+              },
+              "descricao": {
+                "type": "string",
+                "example": "string"
+              },
+              "duracao": {
+                "type": "string",
+                "example": "number"
+              },
+              "links": {
+                "type": "array",
+                "example": [
+                  "string"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "avaliacao": {
+            "type": "string",
+            "example": "number"
+          }
+        }
+      },
+      "Projeto": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "string"
+          },
+          "periodoDuracao": {
+            "type": "string",
+            "example": "number"
+          },
+          "dataLimiteInscricao": {
+            "type": "string",
+            "example": "string"
+          },
+          "instituicaoCliente": {
+            "type": "string",
+            "example": "string"
+          },
+          "coordenador": {
+            "type": "string",
+            "example": "string"
+          }
+        }
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "string"
+          },
+          "login": {
+            "type": "string",
+            "example": "string"
+          },
+          "senha": {
+            "type": "string",
+            "example": "string"
+          },
+          "funcao": {
+            "type": "string",
+            "example": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

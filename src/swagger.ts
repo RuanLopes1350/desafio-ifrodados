@@ -6,6 +6,13 @@ const doc = {
         title: 'API Desafio IFRO Dados',
         description: 'API para gestão de projetos, candidatos e usuários'
     },
+    securityDefinitions: {
+        bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+        }
+    },
     servers: [
         {
             url: 'http://localhost:1350/api',
@@ -34,7 +41,46 @@ const doc = {
             description: 'Endpoints de gerenciamento de usuários'
         }
     ],
-    components: {}
+    components: {
+        schemas: {
+            Login: {
+                login: 'string',
+                senha: 'string'
+            },
+            Candidato: {
+                nome: 'string',
+                email: 'string',
+                estudante: 'boolean',
+                dataCadastro: 'string',
+                projetosAcademicos: {
+                    nome: 'string',
+                    descricao: 'string',
+                    duracao: 'number',
+                    links: ['string']
+                },
+                projetosProfissionais: {
+                    nome: 'string',
+                    descricao: 'string',
+                    duracao: 'number',
+                    links: ['string']
+                },
+                avaliacao: 'number'
+            },
+            Projeto: {
+                nome: 'string',
+                periodoDuracao: 'number',
+                dataLimiteInscricao: 'string',
+                instituicaoCliente: 'string',
+                coordenador: 'string'
+            },
+            Usuario: {
+                nome: 'string',
+                login: 'string',
+                senha: 'string',
+                funcao: 'string'
+            }
+        }
+    }
 };
 
 const outputFile = './doc/swagger-output.json';

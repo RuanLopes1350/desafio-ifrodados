@@ -8,21 +8,21 @@ candidatoRouter
     .get('/',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Listar todos os candidatos'
+        // #swagger.security = [{ "bearerAuth": [] }]
         candidatoController.listar.bind(candidatoController)
-        /* #swagger.responses[200] = {
-            description: 'Lista de candidatos retornada com sucesso.',
-            content: {
-                "application/json": {
-                    schema: {
-                        $ref: '#/    
-                    }
-                }
-            }
-        */
     )
     .post('/',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Criar novo candidato'
+        // #swagger.security = [{ "bearerAuth": [] }]
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: { $ref: '#/components/schemas/Candidato' }
+                }
+            }
+        } */
         candidatoController.criar.bind(candidatoController)
     )
     .patch('/:id',
