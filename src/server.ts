@@ -47,6 +47,7 @@ async function iniciarServidor() {
         app.listen(PORT, async () => {
             console.log(`\nServidor rodando na porta ${PORT}`);
             console.log(`API disponível em: http://localhost:${PORT}/api`);
+            console.log(`Documentação Swagger disponível em: http://localhost:${PORT}/api-docs`);
         });
 
         console.log()
