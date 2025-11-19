@@ -8,7 +8,8 @@
     "start": "tsx src/swagger.ts",
     "seed": "tsx src/seed/seeds.ts",
     "swagger": "tsx src/swagger.ts",
-    "clean": "rm -rf ./dist node_modules"
+    "clean": "rm -rf ./dist node_modules",
+    "test": "vitest --silent"
   },
   "author": "Ruan Lopes",
   "description": "Criado para o desafio de seleção de bolsa para o Projeto 'Ifro Dados'",
