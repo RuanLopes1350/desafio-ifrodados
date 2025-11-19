@@ -9,6 +9,13 @@ class CandidatoService {
 
     async criar(dadosCandidato: ICandidato) {
         try {
+            // Ajustar timezone da data de cadastro (America/Manaus = UTC-4)
+            if (dadosCandidato.dataCadastro) {
+                const data = new Date(dadosCandidato.dataCadastro)
+                const offsetMinutes = 4 * 60 // +4 horas em minutos com relação ao UTC
+                dadosCandidato.dataCadastro = new Date(data.getTime() - offsetMinutes * 60 * 1000)
+            }
+
             const candidatoCriado = await this.repository.criar(dadosCandidato)
             return candidatoCriado
         } catch (error) {

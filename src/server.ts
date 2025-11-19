@@ -3,15 +3,12 @@ import path from 'path';
 import dotenv from 'dotenv';
 import DbConnect from './config/DbConnect.js';
 import cors from 'cors'
-import projetosRouter from './routes/projetosRoutes.js';
-import usuarioRouter from './routes/usuarioRoutes.js';
-import authRouter from './routes/authRoutes.js';
-import candidatoRouter from './routes/candidatoRoutes.js';
+import router from './routes/index.js';
+import swaggerUi from 'swagger-ui-express';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
-
-const username: string = process.env.ADMIN_USERNAME || 'admin';
-const password: string = process.env.ADMIN_PASSWORD || 'admin123';
 
 const app = express();
 app.use(express.json());
@@ -19,10 +16,15 @@ app.use(cors({
     origin: '*'
 }));
 
-app.use('/api', authRouter)
-app.use('/api', projetosRouter)
-app.use('/api', usuarioRouter)
-app.use('/api', candidatoRouter)
+// Carregar o swagger-output.json
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const swaggerDocument = JSON.parse(readFileSync(path.join(__dirname, './doc/swagger-output.json'), 'utf-8'));
+
+// Rota da documentação Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use('/api', router)
 
 app.get('/', (req, res) => {
     res.json({ message: 'A - Gura, Gawr (2020)' });

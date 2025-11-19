@@ -5,9 +5,9 @@ const projetosRouter = express.Router()
 const projetoController = new ProjetoController()
 
 projetosRouter
-    .post('/projetos', projetoController.criar.bind(projetoController))
-    .get('/projetos', projetoController.listar.bind(projetoController))
-    .patch('/projetos/:id', projetoController.editar.bind(projetoController))
-    .delete('/projetos/:id', projetoController.deletar.bind(projetoController))
+    .post('/', projetoController.criar.bind(projetoController))
+    .get('/', projetoController.listar.bind(projetoController))
+    .patch('/:id', projetoController.editar.bind(projetoController))
+    .delete('/:id', projetoController.deletar.bind(projetoController))
 
 export default projetosRouter

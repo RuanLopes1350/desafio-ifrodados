@@ -4,9 +4,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx --watch src/server.ts",
-    "start": "tsx src/server.ts",
+    "dev": "tsx --watch src/swagger.ts",
+    "start": "tsx src/swagger.ts",
     "seed": "tsx src/seed/seeds.ts",
+    "swagger": "tsx src/swagger.ts",
     "clean": "rm -rf ./dist node_modules"
   },
   "author": "Ruan Lopes",
@@ -27,6 +28,9 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
-    "@types/jsonwebtoken": "^9.0.10"
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/swagger-ui-express": "^4.1.8",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   }
 }
