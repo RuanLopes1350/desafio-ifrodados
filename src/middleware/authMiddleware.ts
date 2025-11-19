@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import AuthService from '../service/authService';
 
 export interface AuthRequest extends Request {
     user?: {
@@ -10,7 +11,7 @@ export interface AuthRequest extends Request {
     };
 }
 
-export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+export async function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
     const token = req.headers.authorization?.replace('Bearer ', '');
 
     if (!token) {
@@ -22,6 +23,18 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as any;
+
+        // Validar se o token existe no banco de dados
+        const authService = new AuthService();
+        const tokenValido = await authService.validarToken(token);
+
+        if (!tokenValido) {
+            return res.status(401).json({
+                message: 'Token inválido ou revogado',
+                error: 'Não autorizado'
+            });
+        }
+
         req.user = decoded;
         next();
     } catch (error) {

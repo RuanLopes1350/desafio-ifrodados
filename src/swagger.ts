@@ -17,10 +17,6 @@ const doc = {
         {
             url: 'http://localhost:1350/api',
             description: 'Servidor de Desenvolvimento'
-        },
-        {
-            url: 'https://seu-dominio-producao.com/api',
-            description: 'Servidor de Produção'
         }
     ],
     tags: [

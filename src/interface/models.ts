@@ -42,5 +42,6 @@ export enum FuncaoUsuario {
 
 export interface IUsuario extends ILogin {
     nome: string,
-    funcao: FuncaoUsuario
+    funcao: FuncaoUsuario,
+    token?: string
 }

@@ -44,6 +44,16 @@ class CandidatoService {
         }
     }
 
+    async avaliar(id: string, avaliacao: number) {
+        try {
+            const candidatoAvaliado = await this.repository.avaliar(id, avaliacao)
+            return candidatoAvaliado
+        } catch (error) {
+            console.error('[candidatoService] Erro ao avaliar candidato:', error)
+            throw error
+        }
+    }
+
     async deletar(id: string) {
         try {
             const usuarioDeletado = await this.repository.deletar(id)

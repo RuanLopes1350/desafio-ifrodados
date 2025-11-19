@@ -32,10 +32,43 @@ class AuthService {
                 { expiresIn: '24h' }
             )
 
+            // Salvar token no banco
+            await this.repository.salvarToken(usuario._id.toString(), token)
+
             return { usuario, token }
         } catch (error) {
             console.error('[authService] Erro ao fazer login:', error)
             throw error
+        }
+    }
+
+    async logout(userId: string) {
+        try {
+            await this.repository.removerToken(userId)
+            return { message: 'Logout realizado com sucesso' }
+        } catch (error) {
+            console.error('[authService] Erro ao fazer logout:', error)
+            throw error
+        }
+    }
+
+    async invalidarToken(token: string) {
+        try {
+            await this.repository.removerTokenPorValor(token)
+            return { message: 'Token invalidado com sucesso' }
+        } catch (error) {
+            console.error('[authService] Erro ao invalidar token:', error)
+            throw error
+        }
+    }
+
+    async validarToken(token: string): Promise<boolean> {
+        try {
+            const usuario = await this.repository.encontrarPorToken(token)
+            return usuario !== null
+        } catch (error) {
+            console.error('[authService] Erro ao validar token:', error)
+            return false
         }
     }
 }

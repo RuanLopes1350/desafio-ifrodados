@@ -1,6 +1,7 @@
 import AuthService from "../service/authService";
 import { IUsuario } from "../interface/models";
 import { Request, Response } from "express";
+import { AuthRequest } from "../middleware/authMiddleware";
 
 class AuthController {
     private service: AuthService
@@ -51,6 +52,50 @@ class AuthController {
 
             res.status(500).json({
                 message: 'Erro ao fazer login',
+                error: error.message
+            })
+        }
+    }
+
+    async logout(req: AuthRequest, res: Response) {
+        try {
+            if (!req.user?.id) {
+                return res.status(401).json({
+                    message: 'Usuário não autenticado',
+                    error: 'ID do usuário não encontrado'
+                })
+            }
+
+            const resultado = await this.service.logout(req.user.id)
+
+            res.status(200).json(resultado)
+        } catch (error: any) {
+            console.error('[authController] Erro ao fazer logout:', error)
+            res.status(500).json({
+                message: 'Erro ao fazer logout',
+                error: error.message
+            })
+        }
+    }
+
+    async invalidarToken(req: Request, res: Response) {
+        const { token } = req.body
+
+        if (!token) {
+            return res.status(400).json({
+                message: 'Token é obrigatório',
+                error: 'Campo token faltando'
+            })
+        }
+
+        try {
+            const resultado = await this.service.invalidarToken(token)
+
+            res.status(200).json(resultado)
+        } catch (error: any) {
+            console.error('[authController] Erro ao invalidar token:', error)
+            res.status(500).json({
+                message: 'Erro ao invalidar token',
                 error: error.message
             })
         }

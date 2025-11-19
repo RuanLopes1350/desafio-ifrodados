@@ -94,6 +94,39 @@ class CandidatoController {
         }
     }
 
+    async avaliar(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const { avaliacao } = req.body
+
+            if (!id) {
+                return res.status(400).json({
+                    message: 'parâmetro id não informado',
+                    error: 'necessário informar o id do candidato'
+                })
+            }
+            if (avaliacao === undefined) {
+                return res.status(400).json({
+                    message: 'avaliação não informada',
+                    error: 'necessário informar a avaliação do candidato'
+                })
+            }
+
+            const candidatoAvaliado = await this.service.avaliar(id, avaliacao)
+            res.status(200).json({
+                message: 'candidato avaliado com sucesso',
+                data: candidatoAvaliado
+            })
+        } catch (error: any) {
+            console.error('[candidatoController] Erro ao avaliar candidato:', error)
+
+            res.status(500).json({
+                message: 'Erro ao avaliar candidato',
+                error: error.message
+            })
+        }
+    }
+
     async deletar(req: Request, res: Response) {
         try {
             const { id } = req.params

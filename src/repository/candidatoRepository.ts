@@ -38,6 +38,16 @@ class CandidatoRepository {
         }
     }
 
+    async avaliar(id: string, avalicao: number): Promise<Partial<ICandidato>> {
+        try {
+            const candidatoAvaliado: ICandidato | any = await this.model.findByIdAndUpdate(id, { avaliacao: avalicao }, { new: true })
+            return candidatoAvaliado
+        } catch (error) {
+            console.error('[candidatoRepository] Erro ao avaliar candidatos:', error)
+            throw error
+        }
+    }
+
     async deletar(id: string) {
         try {
             const usuarioDeletado = await this.model.findByIdAndDelete(id)

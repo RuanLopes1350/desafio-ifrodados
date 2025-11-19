@@ -9,10 +9,6 @@
     {
       "url": "http://localhost:1350/api",
       "description": "Servidor de Desenvolvimento"
-    },
-    {
-      "url": "https://seu-dominio-producao.com/api",
-      "description": "Servidor de Produção"
     }
   ],
   "tags": [
@@ -43,16 +39,56 @@
         "description": "",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Login realizado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Login realizado com sucesso",
+                  "data": {
+                    "usuario": {
+                      "id": "507f1f77bcf86cd799439011",
+                      "nome": "João Silva",
+                      "login": "joao.silva@example.com",
+                      "funcao": "COORDENADOR"
+                    },
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Login é obrigatório",
+                  "error": "Campo login faltando"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Credenciais inválidas",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Credenciais inválidas",
+                  "error": "Usuário não encontrado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao fazer login",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -61,6 +97,122 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Fazer logout",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout realizado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Logout realizado com sucesso"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token não fornecido",
+                  "error": "Autenticação necessária"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao fazer logout",
+                  "error": "Erro interno"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/invalidar": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Invalidar token",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Token invalidado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token invalidado com sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token é obrigatório",
+                  "error": "Campo token faltando"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao invalidar token",
+                  "error": "Erro interno"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "description": "Token a ser invalidado"
+                  }
+                }
               }
             }
           }
@@ -85,13 +237,57 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Lista de candidatos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Candidatos listados com sucesso",
+                  "data": [
+                    {
+                      "_id": "507f1f77bcf86cd799439011",
+                      "nome": "Maria Santos",
+                      "email": "maria.santos@example.com",
+                      "estudante": true,
+                      "dataCadastro": "2025-11-19T12:00:00.000Z",
+                      "projetosAcademicos": [
+                        {
+                          "nome": "Sistema Web",
+                          "descricao": "Sistema de gestão",
+                          "duracao": 6,
+                          "links": [
+                            "https://github.com/exemplo"
+                          ]
+                        }
+                      ],
+                      "projetosProfissionais": [],
+                      "avaliacao": 8.5
+                    }
+                  ]
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token não fornecido",
+                  "error": "Autenticação necessária"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao listar candidatos",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -116,17 +312,69 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Candidato criado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Candidato criado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Carlos Oliveira",
+                    "email": "carlos.oliveira@example.com",
+                    "estudante": false,
+                    "dataCadastro": "2025-11-19T12:00:00.000Z",
+                    "projetosAcademicos": [],
+                    "projetosProfissionais": [
+                      {
+                        "nome": "Sistema ERP",
+                        "descricao": "Desenvolvimento de módulo financeiro",
+                        "duracao": 12,
+                        "links": [
+                          "https://example.com/projeto"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
           "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Dados inválidos",
+                  "error": "Campo nome é obrigatório"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao criar candidato",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -172,18 +420,61 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Candidato editado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Candidato editado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Maria Santos Atualizada",
+                    "email": "maria.nova@example.com",
+                    "estudante": true,
+                    "avaliacao": 9
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "ID inválido",
+                  "error": "Formato de ID incorreto"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao editar candidato",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -210,16 +501,151 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Candidato deletado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Candidato deletado com sucesso"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "ID inválido",
+                  "error": "Formato de ID incorreto"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao deletar candidato",
+                  "error": "Erro interno"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/candidato/avaliar/{id}": {
+      "patch": {
+        "tags": [
+          "Candidato"
+        ],
+        "summary": "Avaliar candidato",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidato avaliado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Candidato avaliado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Maria Santos",
+                    "email": "maria.santos@example.com",
+                    "avaliacao": 8.5
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Dados inválidos",
+                  "error": "Avaliação deve ser um número entre 0 e 10"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao avaliar candidato",
+                  "error": "Erro interno"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avaliacao": {
+                    "type": "number",
+                    "description": "Nota de avaliação (0-10)",
+                    "example": 8.5
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -241,41 +667,72 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Projeto criado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Projeto criado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Sistema de Gestão Acadêmica",
+                    "periodoDuracao": 12,
+                    "dataLimiteInscricao": "2025-12-31T23:59:59.000Z",
+                    "instituicaoCliente": "IFRO",
+                    "coordenador": "Prof. Carlos Silva"
+                  }
+                }
+              }
+            }
+          },
           "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Dados inválidos",
+                  "error": "Campo nome é obrigatório"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao criar projeto",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "nome": {
-                    "example": "any"
-                  },
-                  "periodoDuracao": {
-                    "example": "any"
-                  },
-                  "dataLimiteInscricao": {
-                    "example": "any"
-                  },
-                  "instituicaoCliente": {
-                    "example": "any"
-                  },
-                  "coordenador": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/Projeto"
               }
             }
           }
@@ -298,15 +755,53 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Lista de projetos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Projetos listados com sucesso",
+                  "data": [
+                    {
+                      "_id": "507f1f77bcf86cd799439011",
+                      "nome": "Sistema de Gestão Acadêmica",
+                      "periodoDuracao": 12,
+                      "dataLimiteInscricao": "2025-12-31T23:59:59.000Z",
+                      "instituicaoCliente": "IFRO",
+                      "coordenador": "Prof. Carlos Silva"
+                    }
+                  ]
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token não fornecido",
+                  "error": "Autenticação necessária"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao listar projetos",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/projetos/{id}": {
@@ -335,18 +830,65 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Projeto editado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Projeto editado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Sistema de Gestão Atualizado",
+                    "periodoDuracao": 18,
+                    "dataLimiteInscricao": "2026-01-31T23:59:59.000Z",
+                    "instituicaoCliente": "IFRO Campus Porto Velho",
+                    "coordenador": "Prof. Carlos Silva"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "ID inválido",
+                  "error": "Formato de ID incorreto"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "404": {
             "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao editar projeto",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -373,15 +915,54 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Projeto deletado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Projeto deletado com sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "ID inválido",
+                  "error": "Formato de ID incorreto"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao deletar projeto",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/usuarios/": {
@@ -401,38 +982,70 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Usuário criado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Ana Costa",
+                    "login": "ana.costa@ifro.edu.br",
+                    "funcao": "AVALIADOR"
+                  }
+                }
+              }
+            }
+          },
           "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Dados inválidos",
+                  "error": "Campo nome é obrigatório"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao criar usuário",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "nome": {
-                    "example": "any"
-                  },
-                  "login": {
-                    "example": "any"
-                  },
-                  "senha": {
-                    "example": "any"
-                  },
-                  "funcao": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/Usuario"
               }
             }
           }
@@ -455,15 +1068,57 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Lista de usuários retornada com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Usuários listados com sucesso",
+                  "data": [
+                    {
+                      "_id": "507f1f77bcf86cd799439011",
+                      "nome": "Ana Costa",
+                      "login": "ana.costa@ifro.edu.br",
+                      "funcao": "AVALIADOR"
+                    },
+                    {
+                      "_id": "507f1f77bcf86cd799439012",
+                      "nome": "Pedro Santos",
+                      "login": "pedro.santos@ifro.edu.br",
+                      "funcao": "COORDENADOR"
+                    }
+                  ]
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token não fornecido",
+                  "error": "Autenticação necessária"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao listar usuários",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/usuarios/{id}": {
@@ -492,18 +1147,63 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Usuário editado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Usuário editado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Ana Costa Silva",
+                    "login": "ana.costa@ifro.edu.br",
+                    "funcao": "COORDENADOR"
+                  }
+                }
+              }
+            }
           },
           "204": {
             "description": "No Content"
           },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "ID inválido",
+                  "error": "Formato de ID incorreto"
+                }
+              }
+            }
+          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao editar usuário",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -530,18 +1230,57 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Usuário deletado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Usuário deletado com sucesso"
+                }
+              }
+            }
           },
           "204": {
             "description": "No Content"
           },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "ID inválido",
+                  "error": "Formato de ID incorreto"
+                }
+              }
+            }
+          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao deletar usuário",
+                  "error": "Erro interno"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
