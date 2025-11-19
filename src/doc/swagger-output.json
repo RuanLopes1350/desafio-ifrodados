@@ -1291,11 +1291,11 @@
         "properties": {
           "login": {
             "type": "string",
-            "example": "string"
+            "example": "john.doe@example.com"
           },
           "senha": {
             "type": "string",
-            "example": "string"
+            "example": "SenhaSuperSegur@123"
           }
         }
       },

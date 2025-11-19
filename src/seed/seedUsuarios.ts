@@ -14,9 +14,9 @@ export async function seedUsuarios(quantidadeCoordenadores: number, quantidadeAv
 
     const usuariosFixos: IUsuario[] = [
         {
-            nome: "Ruan Lopes",
+            nome: "John Doe",
             funcao: FuncaoUsuario.COORDENADOR,
-            login: "ruan.lopes@example.com",
+            login: "john.doe@example.com",
             senha: "SenhaSuperSegur@123"
         }
     ]

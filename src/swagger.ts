@@ -40,8 +40,8 @@ const doc = {
     components: {
         schemas: {
             Login: {
-                login: 'string',
-                senha: 'string'
+                login: 'john.doe@example.com',
+                senha: 'SenhaSuperSegur@123'
             },
             Candidato: {
                 nome: 'string',
