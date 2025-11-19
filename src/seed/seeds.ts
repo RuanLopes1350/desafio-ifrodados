@@ -5,10 +5,10 @@ import { seedProjetos } from "./seedProjetos";
 import { seedUsuarios } from "./seedUsuarios";
 import { seedCandidatos } from "./seedCandidatos";
 
-let quantidadeProjetos: number = 10
-let quantidadeCoordenadores: number = 5
-let quantidadeAvaliadores: number = 3
-let quantidadeCandidatos: number = 15
+let quantidadeProjetos: number = 50
+let quantidadeCoordenadores: number = 10
+let quantidadeAvaliadores: number = 10
+let quantidadeCandidatos: number = 100
 
 async function seeds() {
 

@@ -12,6 +12,17 @@ export async function seedUsuarios(quantidadeCoordenadores: number, quantidadeAv
     const usuarios: IUsuario[] = []
     const coordenadores: string[] = []
 
+    const usuariosFixos: IUsuario[] = [
+        {
+            nome: "Ruan Lopes",
+            funcao: FuncaoUsuario.COORDENADOR,
+            login: "ruan.lopes@example.com",
+            senha: "SenhaSuperSegur@123"
+        }
+    ]
+
+    await usuarioModel.insertMany(usuariosFixos)
+
     // Criar coordenadores
     for (let i = 0; i < quantidadeCoordenadores; i++) {
         const nomeCoordenador = fakerPT_BR.person.fullName()
@@ -23,6 +34,7 @@ export async function seedUsuarios(quantidadeCoordenadores: number, quantidadeAv
             senha: fakerPT_BR.internet.password()
         })
     }
+    coordenadores.push(usuariosFixos[0].nome)
 
     // Criar avaliadores
     for (let i = 0; i < quantidadeAvaliadores; i++) {
