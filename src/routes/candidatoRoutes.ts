@@ -9,6 +9,16 @@ candidatoRouter
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Listar todos os candidatos'
         candidatoController.listar.bind(candidatoController)
+        /* #swagger.responses[200] = {
+            description: 'Lista de candidatos retornada com sucesso.',
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: '#/    
+                    }
+                }
+            }
+        */
     )
     .post('/',
         // #swagger.tags = ['Candidato']

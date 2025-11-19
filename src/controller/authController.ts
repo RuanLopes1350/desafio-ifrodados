@@ -9,13 +9,15 @@ class AuthController {
     }
 
     async encontrarPorEmail(req: Request, res: Response) {
-        if (!req.body.email) {
+        const { login, senha } = req.body
+
+        if (!login) {
             return res.status(400).json({
-                message: 'Email é obrigatório',
-                error: 'Campo email faltando'
+                message: 'Login é obrigatório',
+                error: 'Campo login faltando'
             })
         }
-        if (!req.body.senha) {
+        if (!senha) {
             return res.status(400).json({
                 message: 'Senha é obrigatória',
                 error: 'Campo senha faltando'
@@ -23,24 +25,32 @@ class AuthController {
         }
 
         try {
-            const usuario: IUsuario | null = await this.service.encontrarPorEmail(req.body.email)
+            const { usuario, token } = await this.service.login(login, senha)
 
-            if (!usuario) {
-                return res.status(404).json({
-                    message: 'Usuário não encontrado',
-                    error: 'Usuário inexistente'
+            res.status(200).json({
+                message: 'Login realizado com sucesso',
+                data: {
+                    usuario: {
+                        id: usuario._id,
+                        nome: usuario.nome,
+                        login: usuario.login,
+                        funcao: usuario.funcao
+                    },
+                    token
+                }
+            })
+        } catch (error: any) {
+            console.error('[authController] Erro ao fazer login:', error)
+
+            if (error.message === 'Usuário não encontrado' || error.message === 'Senha incorreta') {
+                return res.status(401).json({
+                    message: 'Credenciais inválidas',
+                    error: error.message
                 })
             }
 
-            res.status(200).json({
-                message: 'Usuário encontrado com sucesso',
-                data: usuario
-            })
-        } catch (error: any) {
-            console.error('[authController] Erro ao buscar usuário por email:', error)
-
             res.status(500).json({
-                message: 'Erro ao buscar usuário por email',
+                message: 'Erro ao fazer login',
                 error: error.message
             })
         }
