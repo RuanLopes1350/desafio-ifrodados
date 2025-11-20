@@ -46,7 +46,10 @@ class CandidatoController {
 
     async listar(req: Request, res: Response) {
         try {
-            const candidatos = await this.service.listar()
+            const filtros = req.query; 
+
+            const candidatos = await this.service.listar(filtros)
+            
             res.status(200).json({
                 message: 'Candidatos localizados',
                 data: candidatos

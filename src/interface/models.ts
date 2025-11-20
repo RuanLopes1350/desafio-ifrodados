@@ -17,6 +17,12 @@ export interface IProjetosProfissionaisCandidato {
     links?: string[]
 }
 
+export enum StatusInscricao {
+    PENDENTE = 'Pendente',
+    Aprovado = 'Aprovado',
+    Rejeitado = 'Rejeitado'
+}
+
 export interface ICandidato {
     nome: string,
     email: string,
@@ -24,7 +30,8 @@ export interface ICandidato {
     projetosProfissionais?: IProjetosProfissionaisCandidato[],
     estudante: boolean,
     dataCadastro: Date,
-    avaliacao?: number
+    avaliacao?: number,
+    statusInscricao?: StatusInscricao
 }
 
 export interface IProjeto {

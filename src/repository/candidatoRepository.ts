@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import Candidato from '../models/candidato'
 import { ICandidato } from '../interface/models'
+import { CandidatoFilter } from './filters/candidatoFilter'
 
 class CandidatoRepository {
     private model
@@ -18,10 +19,15 @@ class CandidatoRepository {
         }
     }
 
-    async listar(): Promise<ICandidato> {
+    async listar(filtros: any = {}): Promise<ICandidato[]> {
         try {
-            const candidatos: ICandidato | any = await this.model.find()
-            return candidatos
+            // Usa o builder para gerar a query do Mongoose
+            const query = CandidatoFilter.build(filtros);
+            
+            // Passa a query gerada para o find
+            const candidatos: ICandidato | any = await this.model.find(query);
+            
+            return candidatos;
         } catch (error) {
             console.error('[candidatoRepository] Erro ao listar candidatos:', error)
             throw error

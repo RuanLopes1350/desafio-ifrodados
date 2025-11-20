@@ -6,13 +6,7 @@ const doc = {
         title: 'API Desafio IFRO Dados',
         description: 'API para gestão de projetos, candidatos e usuários'
     },
-    securityDefinitions: {
-        bearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT'
-        }
-    },
+
     servers: [
         {
             url: 'http://localhost:1350/api',
@@ -44,36 +38,44 @@ const doc = {
                 senha: 'SenhaSuperSegur@123'
             },
             Candidato: {
-                nome: 'string',
-                email: 'string',
-                estudante: 'boolean',
-                dataCadastro: 'string',
-                projetosAcademicos: {
-                    nome: 'string',
-                    descricao: 'string',
-                    duracao: 'number',
-                    links: ['string']
-                },
-                projetosProfissionais: {
-                    nome: 'string',
-                    descricao: 'string',
-                    duracao: 'number',
-                    links: ['string']
-                },
-                avaliacao: 'number'
+                nome: 'Maria Santos',
+                email: 'maria.santos@example.com',
+                estudante: true,
+                dataCadastro: '2025-11-19T10:30:00.000Z',
+                projetosAcademicos: [{
+                    nome: 'Sistema de Gestão Escolar',
+                    descricao: 'Sistema web para gerenciar matrículas',
+                    duracao: 6,
+                    links: ['https://github.com/user/projeto']
+                }],
+                projetosProfissionais: [{
+                    nome: 'API de Pagamentos',
+                    descricao: 'API REST para processamento de pagamentos',
+                    duracao: 12,
+                    links: ['https://github.com/company/api']
+                }],
+                avaliacao: 8.5,
+                statusInscricao: 'Pendente'
             },
             Projeto: {
-                nome: 'string',
-                periodoDuracao: 'number',
-                dataLimiteInscricao: 'string',
-                instituicaoCliente: 'string',
-                coordenador: 'string'
+                nome: 'Sistema de Gestão Acadêmica',
+                periodoDuracao: 12,
+                dataLimiteInscricao: '2025-12-31T23:59:59.000Z',
+                instituicaoCliente: 'IFRO - Instituto Federal de Rondônia',
+                coordenador: 'Prof. Carlos Silva'
             },
             Usuario: {
-                nome: 'string',
-                login: 'string',
-                senha: 'string',
-                funcao: 'string'
+                nome: 'Ana Costa',
+                login: 'ana.costa@ifro.edu.br',
+                senha: 'Senha@123',
+                funcao: 'Avaliador'
+            }
+        },
+        securitySchemes: {
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT'
             }
         }
     }

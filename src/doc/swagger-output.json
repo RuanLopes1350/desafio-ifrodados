@@ -224,14 +224,73 @@
         "tags": [
           "Candidato"
         ],
-        "summary": "Listar todos os candidatos",
-        "description": "",
+        "summary": "Listar todos os candidatos (com filtros opcionais)",
+        "description": "Retorna lista de candidatos com opção de filtrar por nome, email, estudante, status de inscrição e avaliação",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "nome",
+            "in": "query",
+            "description": "Filtrar por nome (busca parcial)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Filtrar por email (busca parcial)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "estudante",
+            "in": "query",
+            "description": "Filtrar por estudante (true/false)",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "statusInscricao",
+            "in": "query",
+            "description": "Filtrar por status da inscrição",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Pendente",
+                "Aprovado",
+                "Rejeitado"
+              ]
+            }
+          },
+          {
+            "name": "minAvaliacao",
+            "in": "query",
+            "description": "Filtrar por avaliação mínima",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "maxAvaliacao",
+            "in": "query",
+            "description": "Filtrar por avaliação máxima",
+            "required": false,
+            "schema": {
+              "type": "number"
             }
           }
         ],
@@ -557,7 +616,7 @@
           "Candidato"
         ],
         "summary": "Avaliar candidato",
-        "description": "",
+        "description": "Atribui uma nota de avaliação ao candidato (0 a 10)",
         "parameters": [
           {
             "name": "id",
@@ -565,7 +624,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID do candidato"
           },
           {
             "name": "authorization",
@@ -636,14 +696,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "avaliacao": {
-                    "type": "number",
-                    "description": "Nota de avaliação (0-10)",
-                    "example": 8.5
-                  }
-                }
+                "$ref": "#/components/schemas/CandidatoAvaliacao"
               }
             }
           }
@@ -1304,75 +1357,85 @@
         "properties": {
           "nome": {
             "type": "string",
-            "example": "string"
+            "example": "Maria Santos"
           },
           "email": {
             "type": "string",
-            "example": "string"
+            "example": "maria.santos@example.com"
           },
           "estudante": {
-            "type": "string",
-            "example": "boolean"
+            "type": "boolean",
+            "example": true
           },
           "dataCadastro": {
             "type": "string",
-            "example": "string"
+            "example": "2025-11-19T10:30:00.000Z"
           },
           "projetosAcademicos": {
-            "type": "object",
-            "properties": {
-              "nome": {
-                "type": "string",
-                "example": "string"
-              },
-              "descricao": {
-                "type": "string",
-                "example": "string"
-              },
-              "duracao": {
-                "type": "string",
-                "example": "number"
-              },
-              "links": {
-                "type": "array",
-                "example": [
-                  "string"
-                ],
-                "items": {
-                  "type": "string"
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Sistema de Gestão Escolar"
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "Sistema web para gerenciar matrículas"
+                },
+                "duracao": {
+                  "type": "number",
+                  "example": 6
+                },
+                "links": {
+                  "type": "array",
+                  "example": [
+                    "https://github.com/user/projeto"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
           },
           "projetosProfissionais": {
-            "type": "object",
-            "properties": {
-              "nome": {
-                "type": "string",
-                "example": "string"
-              },
-              "descricao": {
-                "type": "string",
-                "example": "string"
-              },
-              "duracao": {
-                "type": "string",
-                "example": "number"
-              },
-              "links": {
-                "type": "array",
-                "example": [
-                  "string"
-                ],
-                "items": {
-                  "type": "string"
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "API de Pagamentos"
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "API REST para processamento de pagamentos"
+                },
+                "duracao": {
+                  "type": "number",
+                  "example": 12
+                },
+                "links": {
+                  "type": "array",
+                  "example": [
+                    "https://github.com/company/api"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
           },
           "avaliacao": {
+            "type": "number",
+            "example": 8.5
+          },
+          "statusInscricao": {
             "type": "string",
-            "example": "number"
+            "example": "Pendente"
           }
         }
       },
@@ -1381,23 +1444,23 @@
         "properties": {
           "nome": {
             "type": "string",
-            "example": "string"
+            "example": "Sistema de Gestão Acadêmica"
           },
           "periodoDuracao": {
-            "type": "string",
-            "example": "number"
+            "type": "number",
+            "example": 12
           },
           "dataLimiteInscricao": {
             "type": "string",
-            "example": "string"
+            "example": "2025-12-31T23:59:59.000Z"
           },
           "instituicaoCliente": {
             "type": "string",
-            "example": "string"
+            "example": "IFRO - Instituto Federal de Rondônia"
           },
           "coordenador": {
             "type": "string",
-            "example": "string"
+            "example": "Prof. Carlos Silva"
           }
         }
       },
@@ -1406,19 +1469,19 @@
         "properties": {
           "nome": {
             "type": "string",
-            "example": "string"
+            "example": "Ana Costa"
           },
           "login": {
             "type": "string",
-            "example": "string"
+            "example": "ana.costa@ifro.edu.br"
           },
           "senha": {
             "type": "string",
-            "example": "string"
+            "example": "Senha@123"
           },
           "funcao": {
             "type": "string",
-            "example": "string"
+            "example": "Avaliador"
           }
         }
       }

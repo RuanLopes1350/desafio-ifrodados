@@ -7,8 +7,47 @@ const candidatoController = new CandidatoController()
 candidatoRouter
     .get('/',
         // #swagger.tags = ['Candidato']
-        // #swagger.summary = 'Listar todos os candidatos'
+        // #swagger.summary = 'Listar todos os candidatos (com filtros opcionais)'
+        // #swagger.description = 'Retorna lista de candidatos com opção de filtrar por nome, email, estudante, status de inscrição e avaliação'
         // #swagger.security = [{ "bearerAuth": [] }]
+        /* #swagger.parameters['nome'] = {
+            in: 'query',
+            description: 'Filtrar por nome (busca parcial)',
+            required: false,
+            type: 'string'
+        } */
+        /* #swagger.parameters['email'] = {
+            in: 'query',
+            description: 'Filtrar por email (busca parcial)',
+            required: false,
+            type: 'string'
+        } */
+        /* #swagger.parameters['estudante'] = {
+            in: 'query',
+            description: 'Filtrar por estudante (true/false)',
+            required: false,
+            type: 'boolean'
+        } */
+        /* #swagger.parameters['statusInscricao'] = {
+            in: 'query',
+            description: 'Filtrar por status da inscrição',
+            required: false,
+            schema: {
+                '@enum': ['Pendente', 'Aprovado', 'Rejeitado']
+            }
+        } */
+        /* #swagger.parameters['minAvaliacao'] = {
+            in: 'query',
+            description: 'Filtrar por avaliação mínima',
+            required: false,
+            type: 'number'
+        } */
+        /* #swagger.parameters['maxAvaliacao'] = {
+            in: 'query',
+            description: 'Filtrar por avaliação máxima',
+            required: false,
+            type: 'number'
+        } */
         /* #swagger.responses[200] = {
             description: 'Lista de candidatos retornada com sucesso',
             content: {
@@ -188,17 +227,19 @@ candidatoRouter
     .patch('/avaliar/:id',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Avaliar candidato'
+        // #swagger.description = 'Atribui uma nota de avaliação ao candidato (0 a 10)'
         // #swagger.security = [{ "bearerAuth": [] }]
+        /* #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID do candidato',
+            required: true,
+            type: 'string'
+        } */
         /* #swagger.requestBody = {
             required: true,
             content: {
                 "application/json": {
-                    schema: {
-                        type: 'object',
-                        properties: {
-                            avaliacao: { type: 'number', description: 'Nota de avaliação (0-10)', example: 8.5 }
-                        }
-                    }
+                    schema: { $ref: '#/components/schemas/CandidatoAvaliacao' }
                 }
             }
         } */

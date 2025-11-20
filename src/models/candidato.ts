@@ -25,7 +25,8 @@ class Candidato {
             projetosProfissionais: { type: [projetosProfissionaisSchema], required: false },
             estudante: { type: Boolean, required: true },
             dataCadastro: { type: Date, default: Date.now() },
-            avaliacao: { type: Number, required: false }
+            avaliacao: { type: Number, required: false },
+            statusInscricao: { type: String, required: false, enum: ['Pendente', 'Aprovado', 'Rejeitado'], default: 'Pendente' }
         });
         this.model = mongoose.models.Candidato || mongoose.model('Candidato', candidatoSchema);
     }
