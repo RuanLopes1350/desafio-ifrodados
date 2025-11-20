@@ -12,7 +12,7 @@ const router = express.Router();
 router.use('/auth', authRouter);
 
 // Rotas protegidas (exigem autenticação)
-router.use('/candidato', authMiddleware, candidatoRouter);
+router.use('/candidato', candidatoRouter);
 router.use('/projetos', authMiddleware, projetosRouter);
 router.use('/usuarios', authMiddleware, usuarioRouter);
 

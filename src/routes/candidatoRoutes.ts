@@ -1,6 +1,7 @@
 import express from 'express'
 import CandidatoController from '../controller/candidatoController'
 import { checkRole } from '../middleware/roleMiddleware'
+import { authMiddleware } from '../middleware/authMiddleware'
 
 const candidatoRouter = express.Router()
 const candidatoController = new CandidatoController()
@@ -96,7 +97,7 @@ candidatoRouter
                 }
             }
         } */
-        candidatoController.listar.bind(candidatoController)
+        authMiddleware,candidatoController.listar.bind(candidatoController)
     )
     .post('/',
         // #swagger.tags = ['Candidato']
@@ -239,6 +240,7 @@ candidatoRouter
                 }
             }
         } */
+       authMiddleware,
         candidatoController.editar.bind(candidatoController)
     )
     .patch('/avaliar/:id',
@@ -309,6 +311,7 @@ candidatoRouter
                 }
             }
         } */
+       authMiddleware,
         checkRole(['Avaliador', 'Coordenador']), candidatoController.avaliar.bind(candidatoController)
     )
     .patch('/status/:id',
@@ -379,6 +382,7 @@ candidatoRouter
                 }
             }
         } */
+       authMiddleware,
         checkRole(['Coordenador']),
         candidatoController.alterarStatus.bind(candidatoController)
     )
@@ -430,6 +434,7 @@ candidatoRouter
                 }
             }
         } */
+       authMiddleware,
         checkRole(['Coordenador']),
         candidatoController.deletar.bind(candidatoController)
     )

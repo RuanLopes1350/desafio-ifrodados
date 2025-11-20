@@ -361,15 +361,6 @@
         ],
         "summary": "Criar novo candidato",
         "description": "**Permissão:** Coordenador e Avaliador",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Candidato criado com sucesso",
