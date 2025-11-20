@@ -225,7 +225,7 @@
           "Candidato"
         ],
         "summary": "Listar todos os candidatos (com filtros opcionais)",
-        "description": "Retorna lista de candidatos com opção de filtrar por nome, email, estudante, status de inscrição e avaliação",
+        "description": "Retorna lista de candidatos com opção de filtrar por nome, email, estudante, status de inscrição e avaliação. **Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "authorization",
@@ -360,7 +360,7 @@
           "Candidato"
         ],
         "summary": "Criar novo candidato",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "authorization",
@@ -459,7 +459,7 @@
           "Candidato"
         ],
         "summary": "Editar candidato",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "id",
@@ -551,7 +551,7 @@
           "Candidato"
         ],
         "summary": "Deletar candidato",
-        "description": "",
+        "description": "**Permissão:** Apenas Coordenador",
         "parameters": [
           {
             "name": "id",
@@ -630,7 +630,7 @@
           "Candidato"
         ],
         "summary": "Avaliar candidato",
-        "description": "Atribui uma nota de avaliação ao candidato (0 a 10)",
+        "description": "Atribui uma nota de avaliação ao candidato (0 a 10). **Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "id",
@@ -726,7 +726,7 @@
           "Candidato"
         ],
         "summary": "Alterar status da inscrição",
-        "description": "Altera o status da inscrição do candidato (Pendente, Aprovado ou Rejeitado)",
+        "description": "Altera o status da inscrição do candidato (Pendente, Aprovado ou Rejeitado). **Permissão:** Apenas Coordenador",
         "parameters": [
           {
             "name": "id",
@@ -822,7 +822,7 @@
           "Projeto"
         ],
         "summary": "Criar novo projeto",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "authorization",
@@ -912,7 +912,7 @@
           "Projeto"
         ],
         "summary": "Listar todos os projetos",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "authorization",
@@ -979,7 +979,7 @@
           "Projeto"
         ],
         "summary": "Editar projeto",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "id",
@@ -1078,7 +1078,7 @@
           "Projeto"
         ],
         "summary": "Deletar projeto",
-        "description": "",
+        "description": "**Permissão:** Apenas Coordenador",
         "parameters": [
           {
             "name": "id",
@@ -1157,7 +1157,7 @@
           "Usuario"
         ],
         "summary": "Criar novo usuário",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "authorization",
@@ -1242,7 +1242,7 @@
           "Usuario"
         ],
         "summary": "Listar todos os usuários",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "authorization",
@@ -1313,7 +1313,7 @@
           "Usuario"
         ],
         "summary": "Editar usuário",
-        "description": "",
+        "description": "**Permissão:** Coordenador e Avaliador",
         "parameters": [
           {
             "name": "id",
@@ -1407,7 +1407,7 @@
           "Usuario"
         ],
         "summary": "Deletar usuário",
-        "description": "",
+        "description": "**Permissão:** Apenas Coordenador",
         "parameters": [
           {
             "name": "id",

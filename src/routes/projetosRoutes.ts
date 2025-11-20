@@ -9,6 +9,7 @@ projetosRouter
     .post('/',
         // #swagger.tags = ['Projeto']
         // #swagger.summary = 'Criar novo projeto'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.requestBody = {
             required: true,
@@ -74,6 +75,7 @@ projetosRouter
     .get('/',
         // #swagger.tags = ['Projeto']
         // #swagger.summary = 'Listar todos os projetos'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.responses[200] = {
             description: 'Lista de projetos retornada com sucesso',
@@ -120,6 +122,7 @@ projetosRouter
     .patch('/:id',
         // #swagger.tags = ['Projeto']
         // #swagger.summary = 'Editar projeto'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.parameters['id'] = {
             in: 'path',
@@ -191,6 +194,7 @@ projetosRouter
     .delete('/:id',
         // #swagger.tags = ['Projeto']
         // #swagger.summary = 'Deletar projeto'
+        // #swagger.description = '**Permissão:** Apenas Coordenador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.responses[200] = {
             description: 'Projeto deletado com sucesso',

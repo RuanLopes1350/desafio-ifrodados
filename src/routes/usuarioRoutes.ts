@@ -9,6 +9,7 @@ usuarioRouter
     .post('/',
         // #swagger.tags = ['Usuario']
         // #swagger.summary = 'Criar novo usuário'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.requestBody = {
             required: true,
@@ -72,6 +73,7 @@ usuarioRouter
     .get('/',
         // #swagger.tags = ['Usuario']
         // #swagger.summary = 'Listar todos os usuários'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.responses[200] = {
             description: 'Lista de usuários retornada com sucesso',
@@ -121,6 +123,7 @@ usuarioRouter
     .patch('/:id',
         // #swagger.tags = ['Usuario']
         // #swagger.summary = 'Editar usuário'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.parameters['id'] = {
             in: 'path',
@@ -190,6 +193,7 @@ usuarioRouter
     .delete('/:id',
         // #swagger.tags = ['Usuario']
         // #swagger.summary = 'Deletar usuário'
+        // #swagger.description = '**Permissão:** Apenas Coordenador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.responses[200] = {
             description: 'Usuário deletado com sucesso',

@@ -9,7 +9,7 @@ candidatoRouter
     .get('/',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Listar todos os candidatos (com filtros opcionais)'
-        // #swagger.description = 'Retorna lista de candidatos com opção de filtrar por nome, email, estudante, status de inscrição e avaliação'
+        // #swagger.description = 'Retorna lista de candidatos com opção de filtrar por nome, email, estudante, status de inscrição e avaliação. **Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.parameters['nome'] = {
             in: 'query',
@@ -101,6 +101,7 @@ candidatoRouter
     .post('/',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Criar novo candidato'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.requestBody = {
             required: true,
@@ -172,6 +173,7 @@ candidatoRouter
     .patch('/:id',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Editar candidato'
+        // #swagger.description = '**Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.parameters['id'] = {
             in: 'path',
@@ -242,7 +244,7 @@ candidatoRouter
     .patch('/avaliar/:id',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Avaliar candidato'
-        // #swagger.description = 'Atribui uma nota de avaliação ao candidato (0 a 10)'
+        // #swagger.description = 'Atribui uma nota de avaliação ao candidato (0 a 10). **Permissão:** Coordenador e Avaliador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.parameters['id'] = {
             in: 'path',
@@ -312,7 +314,7 @@ candidatoRouter
     .patch('/status/:id',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Alterar status da inscrição'
-        // #swagger.description = 'Altera o status da inscrição do candidato (Pendente, Aprovado ou Rejeitado)'
+        // #swagger.description = 'Altera o status da inscrição do candidato (Pendente, Aprovado ou Rejeitado). **Permissão:** Apenas Coordenador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.parameters['id'] = {
             in: 'path',
@@ -383,6 +385,7 @@ candidatoRouter
     .delete('/:id',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Deletar candidato'
+        // #swagger.description = '**Permissão:** Apenas Coordenador'
         // #swagger.security = [{ "bearerAuth": [] }]
         /* #swagger.responses[200] = {
             description: 'Candidato deletado com sucesso',
