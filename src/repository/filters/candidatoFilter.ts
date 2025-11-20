@@ -18,8 +18,8 @@ export class CandidatoFilter {
             query.estudante = params.estudante === 'true' || params.estudante === true;
         }
 
-        if (params.statusInscricao) {
-            query.statusInscricao = params.statusInscricao;
+        if (params.StatusInscricao) {
+            query.StatusInscricao = params.StatusInscricao;
         }
 
         if (params.minAvaliacao) {
