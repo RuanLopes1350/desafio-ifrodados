@@ -467,7 +467,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID do candidato"
           },
           {
             "name": "authorization",
@@ -533,7 +534,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Candidato"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -590,6 +601,9 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Erro interno do servidor",
@@ -697,6 +711,102 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CandidatoAvaliacao"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/candidato/status/{id}": {
+      "patch": {
+        "tags": [
+          "Candidato"
+        ],
+        "summary": "Alterar status da inscrição",
+        "description": "Altera o status da inscrição do candidato (Pendente, Aprovado ou Rejeitado)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do candidato"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status alterado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Status da inscrição alterado com sucesso",
+                  "data": {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "nome": "Maria Santos",
+                    "email": "maria.santos@example.com",
+                    "statusInscricao": "Aprovado"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "status inválido",
+                  "error": "status deve ser Pendente, Aprovado ou Rejeitado"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Token inválido ou expirado",
+                  "error": "Não autorizado"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao alterar status da inscrição",
+                  "error": "Erro interno"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatoStatus"
               }
             }
           }
@@ -871,7 +981,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID do projeto"
           },
           {
             "name": "authorization",
@@ -941,7 +1052,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Projeto"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -998,6 +1119,9 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Erro interno do servidor",
@@ -1188,7 +1312,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID do usuário"
           },
           {
             "name": "authorization",
@@ -1256,7 +1381,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -1316,6 +1451,9 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Erro interno do servidor",
@@ -1482,6 +1620,24 @@
           "funcao": {
             "type": "string",
             "example": "Avaliador"
+          }
+        }
+      },
+      "CandidatoAvaliacao": {
+        "type": "object",
+        "properties": {
+          "avaliacao": {
+            "type": "number",
+            "example": 8.5
+          }
+        }
+      },
+      "CandidatoStatus": {
+        "type": "object",
+        "properties": {
+          "statusInscricao": {
+            "type": "string",
+            "example": "Aprovado"
           }
         }
       }

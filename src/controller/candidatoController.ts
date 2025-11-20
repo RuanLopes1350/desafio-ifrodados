@@ -130,6 +130,47 @@ class CandidatoController {
         }
     }
 
+    async alterarStatus(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const { statusInscricao } = req.body
+
+            if (!id) {
+                return res.status(400).json({
+                    message: 'parâmetro id não informado',
+                    error: 'necessário informar o id do candidato'
+                })
+            }
+            if (!statusInscricao) {
+                return res.status(400).json({
+                    message: 'status não informado',
+                    error: 'necessário informar o status da inscrição (Pendente, Aprovado ou Rejeitado)'
+                })
+            }
+
+            const statusValidos = ['Pendente', 'Aprovado', 'Rejeitado']
+            if (!statusValidos.includes(statusInscricao)) {
+                return res.status(400).json({
+                    message: 'status inválido',
+                    error: 'status deve ser Pendente, Aprovado ou Rejeitado'
+                })
+            }
+
+            const candidatoAtualizado = await this.service.alterarStatus(id, statusInscricao)
+            res.status(200).json({
+                message: 'Status da inscrição alterado com sucesso',
+                data: candidatoAtualizado
+            })
+        } catch (error: any) {
+            console.error('[candidatoController] Erro ao alterar status:', error)
+
+            res.status(500).json({
+                message: 'Erro ao alterar status da inscrição',
+                error: error.message
+            })
+        }
+    }
+
     async deletar(req: Request, res: Response) {
         try {
             const { id } = req.params

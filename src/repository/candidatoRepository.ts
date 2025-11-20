@@ -54,6 +54,16 @@ class CandidatoRepository {
         }
     }
 
+    async alterarStatus(id: string, statusInscricao: string): Promise<Partial<ICandidato>> {
+        try {
+            const candidatoAtualizado: ICandidato | any = await this.model.findByIdAndUpdate(id, { statusInscricao }, { new: true })
+            return candidatoAtualizado
+        } catch (error) {
+            console.error('[candidatoRepository] Erro ao alterar status:', error)
+            throw error
+        }
+    }
+
     async deletar(id: string) {
         try {
             const usuarioDeletado = await this.model.findByIdAndDelete(id)

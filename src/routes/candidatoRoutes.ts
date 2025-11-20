@@ -1,5 +1,6 @@
 import express from 'express'
 import CandidatoController from '../controller/candidatoController'
+import { checkRole } from '../middleware/roleMiddleware'
 
 const candidatoRouter = express.Router()
 const candidatoController = new CandidatoController()
@@ -172,6 +173,20 @@ candidatoRouter
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Editar candidato'
         // #swagger.security = [{ "bearerAuth": [] }]
+        /* #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID do candidato',
+            required: true,
+            type: 'string'
+        } */
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: { $ref: '#/components/schemas/Candidato' }
+                }
+            }
+        } */
         /* #swagger.responses[200] = {
             description: 'Candidato editado com sucesso',
             content: {
@@ -294,6 +309,77 @@ candidatoRouter
         } */
         candidatoController.avaliar.bind(candidatoController)
     )
+    .patch('/status/:id',
+        // #swagger.tags = ['Candidato']
+        // #swagger.summary = 'Alterar status da inscrição'
+        // #swagger.description = 'Altera o status da inscrição do candidato (Pendente, Aprovado ou Rejeitado)'
+        // #swagger.security = [{ "bearerAuth": [] }]
+        /* #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID do candidato',
+            required: true,
+            type: 'string'
+        } */
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: { $ref: '#/components/schemas/CandidatoStatus' }
+                }
+            }
+        } */
+        /* #swagger.responses[200] = {
+            description: 'Status alterado com sucesso',
+            content: {
+                "application/json": {
+                    example: {
+                        message: 'Status da inscrição alterado com sucesso',
+                        data: {
+                            _id: '507f1f77bcf86cd799439011',
+                            nome: 'Maria Santos',
+                            email: 'maria.santos@example.com',
+                            statusInscricao: 'Aprovado'
+                        }
+                    }
+                }
+            }
+        } */
+        /* #swagger.responses[400] = {
+            description: 'Dados inválidos',
+            content: {
+                "application/json": {
+                    example: {
+                        message: 'status inválido',
+                        error: 'status deve ser Pendente, Aprovado ou Rejeitado'
+                    }
+                }
+            }
+        } */
+        /* #swagger.responses[401] = {
+            description: 'Não autorizado',
+            content: {
+                "application/json": {
+                    example: {
+                        message: 'Token inválido ou expirado',
+                        error: 'Não autorizado'
+                    }
+                }
+            }
+        } */
+        /* #swagger.responses[500] = {
+            description: 'Erro interno do servidor',
+            content: {
+                "application/json": {
+                    example: {
+                        message: 'Erro ao alterar status da inscrição',
+                        error: 'Erro interno'
+                    }
+                }
+            }
+        } */
+        checkRole(['Coordenador']),
+        candidatoController.alterarStatus.bind(candidatoController)
+    )
     .delete('/:id',
         // #swagger.tags = ['Candidato']
         // #swagger.summary = 'Deletar candidato'
@@ -341,6 +427,7 @@ candidatoRouter
                 }
             }
         } */
+        checkRole(['Coordenador']),
         candidatoController.deletar.bind(candidatoController)
     )
 

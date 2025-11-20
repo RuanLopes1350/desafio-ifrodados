@@ -1,5 +1,6 @@
 import express from "express";
 import ProjetoController from "../controller/projetosController";
+import { checkRole } from '../middleware/roleMiddleware'
 
 const projetosRouter = express.Router()
 const projetoController = new ProjetoController()
@@ -120,6 +121,20 @@ projetosRouter
         // #swagger.tags = ['Projeto']
         // #swagger.summary = 'Editar projeto'
         // #swagger.security = [{ "bearerAuth": [] }]
+        /* #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID do projeto',
+            required: true,
+            type: 'string'
+        } */
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: { $ref: '#/components/schemas/Projeto' }
+                }
+            }
+        } */
         /* #swagger.responses[200] = {
             description: 'Projeto editado com sucesso',
             content: {
@@ -220,6 +235,7 @@ projetosRouter
                 }
             }
         } */
+        checkRole(['Coordenador']),
         projetoController.deletar.bind(projetoController)
     )
 

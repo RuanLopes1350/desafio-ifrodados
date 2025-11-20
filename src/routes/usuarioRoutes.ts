@@ -1,5 +1,6 @@
 import UsuarioController from "../controller/usuarioController";
 import express from 'express'
+import { checkRole } from '../middleware/roleMiddleware'
 
 const usuarioController = new UsuarioController()
 const usuarioRouter = express.Router()
@@ -121,6 +122,20 @@ usuarioRouter
         // #swagger.tags = ['Usuario']
         // #swagger.summary = 'Editar usuário'
         // #swagger.security = [{ "bearerAuth": [] }]
+        /* #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID do usuário',
+            required: true,
+            type: 'string'
+        } */
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: { $ref: '#/components/schemas/Usuario' }
+                }
+            }
+        } */
         /* #swagger.responses[200] = {
             description: 'Usuário editado com sucesso',
             content: {
@@ -219,6 +234,7 @@ usuarioRouter
                 }
             }
         } */
+        checkRole(['Coordenador']),
         usuarioController.deletar.bind(usuarioController)
     )
 

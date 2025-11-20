@@ -54,6 +54,16 @@ class CandidatoService {
         }
     }
 
+    async alterarStatus(id: string, statusInscricao: string) {
+        try {
+            const candidatoAtualizado = await this.repository.alterarStatus(id, statusInscricao)
+            return candidatoAtualizado
+        } catch (error) {
+            console.error('[candidatoService] Erro ao alterar status:', error)
+            throw error
+        }
+    }
+
     async deletar(id: string) {
         try {
             const usuarioDeletado = await this.repository.deletar(id)

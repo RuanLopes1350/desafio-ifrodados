@@ -4,6 +4,7 @@ import candidatoRouter from "./candidatoRoutes";
 import projetosRouter from "./projetosRoutes";
 import usuarioRouter from "./usuarioRoutes";
 import { authMiddleware } from '../middleware/authMiddleware.js';
+import { checkRole } from '../middleware/roleMiddleware.js';
 
 const router = express.Router();
 

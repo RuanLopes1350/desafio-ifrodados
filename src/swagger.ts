@@ -69,6 +69,12 @@ const doc = {
                 login: 'ana.costa@ifro.edu.br',
                 senha: 'Senha@123',
                 funcao: 'Avaliador'
+            },
+            CandidatoAvaliacao: {
+                avaliacao: 8.5
+            },
+            CandidatoStatus: {
+                statusInscricao: 'Aprovado'
             }
         },
         securitySchemes: {
