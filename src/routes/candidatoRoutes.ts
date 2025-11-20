@@ -307,7 +307,7 @@ candidatoRouter
                 }
             }
         } */
-        candidatoController.avaliar.bind(candidatoController)
+        checkRole(['Avaliador', 'Coordenador']), candidatoController.avaliar.bind(candidatoController)
     )
     .patch('/status/:id',
         // #swagger.tags = ['Candidato']

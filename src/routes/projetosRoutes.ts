@@ -69,7 +69,7 @@ projetosRouter
                 }
             }
         } */
-        projetoController.criar.bind(projetoController)
+        checkRole(['Coordenador']), projetoController.criar.bind(projetoController)
     )
     .get('/',
         // #swagger.tags = ['Projeto']
@@ -186,7 +186,7 @@ projetosRouter
                 }
             }
         } */
-        projetoController.editar.bind(projetoController)
+        checkRole(['Coordenador']), projetoController.editar.bind(projetoController)
     )
     .delete('/:id',
         // #swagger.tags = ['Projeto']
