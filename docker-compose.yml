@@ -3,10 +3,22 @@ services:
     image: mongo:8
     container_name: desafio-ifrodados-mongo
     ports:
-      - "27019:27017"
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
     command: mongod --quiet --logpath /dev/null
+    restart: always
+  api:
+    build: .
+    container_name: desafio-ifrodados-api
+    ports:
+      - "1350:1350"
+    depends_on:
+      - mongo
+    environment:
+      - PORT=1350
+      - DB_URL=mongodb://desafio-ifrodados-mongo:27017/desafio-ifro
+      - JWT_SECRET=sua-chave-secreta-super-segura-mude-em-producao
     restart: always
 
 volumes:
