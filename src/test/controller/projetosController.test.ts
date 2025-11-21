@@ -37,18 +37,38 @@ describe('ProjetoController', () => {
                 { _id: '2', nome: 'Projeto 2', periodoDuracao: 6 }
             ];
 
-            vi.mocked(serviceMock.listar).mockResolvedValue(mockProjetos);
+            const mockResultado = {
+                docs: mockProjetos,
+                totalDocs: 2,
+                page: 1,
+                limit: 10,
+                totalPages: 1,
+                hasNextPage: false,
+                hasPrevPage: false
+            };
+
+            req.query = {};
+            vi.mocked(serviceMock.listar).mockResolvedValue(mockResultado);
 
             await controller.listar(req as Request, res as Response);
 
             expect(res.status).toHaveBeenCalledWith(200);
             expect(statusJsonSpy).toHaveBeenCalledWith({
                 message: 'Projetos listados com sucesso',
-                data: mockProjetos
+                data: mockProjetos,
+                pagination: {
+                    total: 2,
+                    page: 1,
+                    limit: 10,
+                    totalPages: 1,
+                    hasNextPage: false,
+                    hasPrevPage: false
+                }
             });
         });
 
         it('deve retornar erro 500 se houver falha no serviço', async () => {
+            req.query = {};
             vi.mocked(serviceMock.listar).mockRejectedValue(new Error('Erro interno'));
 
             await controller.listar(req as Request, res as Response);

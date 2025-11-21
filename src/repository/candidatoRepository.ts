@@ -2,6 +2,8 @@ import mongoose from 'mongoose'
 import Candidato from '../models/candidato'
 import { ICandidato } from '../interface/models'
 import { CandidatoFilter } from './filters/candidatoFilter'
+import { Document } from 'mongoose'
+
 
 class CandidatoRepository {
     private model
@@ -19,15 +21,23 @@ class CandidatoRepository {
         }
     }
 
-    async listar(filtros: any = {}): Promise<ICandidato[]> {
+    async listar(filtros: any = {}, opcoesPaginacao: any = {}) {
         try {
-            // Usa o builder para gerar a query do Mongoose
             const query = CandidatoFilter.build(filtros);
-            
-            // Passa a query gerada para o find
-            const candidatos: ICandidato | any = await this.model.find(query);
-            
-            return candidatos;
+
+            const page = parseInt(opcoesPaginacao.page) || 1;
+            const limit = parseInt(opcoesPaginacao.limit) || 10;
+            const sort = opcoesPaginacao.sort || { dataCadastro: -1 };
+
+            const options = {
+                page,
+                limit,
+                sort,
+                lean: true
+            };
+
+            const resultado = await (this.model as any).paginate(query, options);
+            return resultado;
         } catch (error) {
             console.error('[candidatoRepository] Erro ao listar candidatos:', error)
             throw error
@@ -36,8 +46,8 @@ class CandidatoRepository {
 
     async editar(id: string, dadosEditar: Partial<ICandidato>): Promise<Partial<ICandidato>> {
         try {
-            const usuarioEditado: ICandidato | any = await this.model.findByIdAndUpdate(id, dadosEditar)
-            return usuarioEditado
+            const usuarioEditado: ICandidato | Document | null = await this.model.findByIdAndUpdate(id, dadosEditar)
+            return usuarioEditado as Partial<ICandidato>
         } catch (error) {
             console.error('[candidatoRepository] Erro ao editar candidatos:', error)
             throw error
@@ -46,8 +56,11 @@ class CandidatoRepository {
 
     async avaliar(id: string, avalicao: number): Promise<Partial<ICandidato>> {
         try {
-            const candidatoAvaliado: ICandidato | any = await this.model.findByIdAndUpdate(id, { avaliacao: avalicao }, { new: true })
-            return candidatoAvaliado
+            const candidatoAvaliado: ICandidato | Document | null = await this.model.findByIdAndUpdate(id, { avaliacao: avalicao }, { new: true })
+            if (!candidatoAvaliado) {
+                throw new Error('Candidato não encontrado')
+            }
+            return candidatoAvaliado as Partial<ICandidato>
         } catch (error) {
             console.error('[candidatoRepository] Erro ao avaliar candidatos:', error)
             throw error
@@ -56,8 +69,8 @@ class CandidatoRepository {
 
     async alterarStatus(id: string, statusInscricao: string): Promise<Partial<ICandidato>> {
         try {
-            const candidatoAtualizado: ICandidato | any = await this.model.findByIdAndUpdate(id, { statusInscricao }, { new: true })
-            return candidatoAtualizado
+            const candidatoAtualizado: ICandidato | Document | null = await this.model.findByIdAndUpdate(id, { statusInscricao }, { new: true })
+            return candidatoAtualizado as Partial<ICandidato>
         } catch (error) {
             console.error('[candidatoRepository] Erro ao alterar status:', error)
             throw error

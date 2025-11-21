@@ -10,7 +10,7 @@ describe('CandidatoService', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        
+
         service = new CandidatoService();
         repositoryMock = (CandidatoRepository as any).mock.instances[0];
     });
@@ -28,7 +28,7 @@ describe('CandidatoService', () => {
             _id: '12345',
             ...dadosEntrada
         };
-        
+
         vi.mocked(repositoryMock.criar).mockResolvedValue(retornoEsperado);
 
         const resultado = await service.criar(dadosEntrada);
@@ -47,5 +47,29 @@ describe('CandidatoService', () => {
         const dadosEntrada: any = { nome: 'Teste' };
 
         await expect(service.criar(dadosEntrada)).rejects.toThrow('Erro de conexão');
+    });
+
+    it('deve chamar o repositório com os filtros corretos', async () => {
+        const filtrosMock = {
+            nome: 'Maria',
+            estudante: 'true',
+            minAvaliacao: '8'
+        };
+
+        const mockResultado = {
+            docs: [],
+            totalDocs: 0,
+            page: 1,
+            limit: 10,
+            totalPages: 0,
+            hasNextPage: false,
+            hasPrevPage: false
+        };
+
+        vi.mocked(repositoryMock.listar).mockResolvedValue(mockResultado);
+
+        await service.listar(filtrosMock, {});
+
+        expect(repositoryMock.listar).toHaveBeenCalledWith(filtrosMock, {});
     });
 });

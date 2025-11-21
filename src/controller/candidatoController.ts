@@ -2,7 +2,6 @@ import CandidatoService from "../service/candidatoService";
 import { ICandidato } from "../interface/models";
 import { Request, Response } from 'express'
 
-// Função auxiliar simples para validar formato de email
 const isValidEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -60,7 +59,7 @@ class CandidatoController {
 
         } catch (error: any) {
             console.error('[candidatoController] Erro ao cadastrar candidato:', error)
-            if (error.code === 11000) { 
+            if (error.code === 11000) {
                 return res.status(400).json({ message: 'Erro de cadastro', error: 'E-mail já cadastrado' });
             }
             res.status(500).json({
@@ -72,11 +71,26 @@ class CandidatoController {
 
     async listar(req: Request, res: Response) {
         try {
-            const filtros = req.query; 
-            const candidatos = await this.service.listar(filtros)
+            const { page, limit, sort, ...filtros } = req.query;
+
+            const opcoesPaginacao = {
+                page: page as string,
+                limit: limit as string,
+                sort: sort ? JSON.parse(sort as string) : undefined
+            };
+
+            const resultado = await this.service.listar(filtros, opcoesPaginacao)
             res.status(200).json({
                 message: 'Candidatos localizados',
-                data: candidatos
+                data: resultado.docs,
+                pagination: {
+                    total: resultado.totalDocs,
+                    page: resultado.page,
+                    limit: resultado.limit,
+                    totalPages: resultado.totalPages,
+                    hasNextPage: resultado.hasNextPage,
+                    hasPrevPage: resultado.hasPrevPage
+                }
             })
         } catch (error: any) {
             console.error('[candidatoController] Erro ao listar candidatos:', error)
@@ -103,7 +117,7 @@ class CandidatoController {
             if ('avaliacao' in dadosEditar || 'statusInscricao' in dadosEditar) {
                 delete dadosEditar.avaliacao;
                 delete dadosEditar.statusInscricao;
-                
+
                 if (Object.keys(dadosEditar).length === 0) {
                     return res.status(403).json({
                         message: 'Operação não permitida',
@@ -113,9 +127,9 @@ class CandidatoController {
             }
 
             const usuarioEditado = await this.service.editar(id, dadosEditar)
-            
+
             if (!usuarioEditado) {
-                 return res.status(404).json({ message: 'Não encontrado', error: 'Candidato não encontrado' })
+                return res.status(404).json({ message: 'Não encontrado', error: 'Candidato não encontrado' })
             }
 
             res.status(200).json({
@@ -150,7 +164,7 @@ class CandidatoController {
             }
 
             const candidatoAvaliado = await this.service.avaliar(id, avaliacao)
-            
+
             if (!candidatoAvaliado) {
                 return res.status(404).json({ message: 'Candidato não encontrado', error: 'ID inválido' })
             }
@@ -203,9 +217,9 @@ class CandidatoController {
             if (!id) return res.status(400).json({ message: 'ID faltando', error: 'Informe o ID' });
 
             const deletado = await this.service.deletar(id)
-            
+
             if (!deletado) {
-                 return res.status(404).json({ message: 'Não encontrado', error: 'Candidato não encontrado para deletar' })
+                return res.status(404).json({ message: 'Não encontrado', error: 'Candidato não encontrado para deletar' })
             }
 
             res.status(200).json({ message: 'Candidato deletado com sucesso', data: deletado })

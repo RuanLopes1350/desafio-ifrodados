@@ -7,10 +7,10 @@ class ProjetoService {
         this.repository = new ProjetoRepository()
     }
 
-    async listar() {
+    async listar(opcoesPaginacao: any = {}) {
         try {
-            const projetos = await this.repository.listar()
-            return projetos
+            const resultado = await this.repository.listar(opcoesPaginacao)
+            return resultado
         } catch (error) {
             console.error('[projetosService] Erro ao listar projetos:', error)
             throw error

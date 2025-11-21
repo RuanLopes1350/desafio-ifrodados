@@ -10,10 +10,26 @@ class ProjetoController {
 
     async listar(req: Request, res: Response) {
         try {
-            const projetos = await this.service.listar()
+            const { page, limit, sort } = req.query;
+
+            const opcoesPaginacao = {
+                page: page as string,
+                limit: limit as string,
+                sort: sort ? JSON.parse(sort as string) : undefined
+            };
+
+            const resultado = await this.service.listar(opcoesPaginacao)
             res.status(200).json({
                 message: 'Projetos listados com sucesso',
-                data: projetos
+                data: resultado.docs,
+                pagination: {
+                    total: resultado.totalDocs,
+                    page: resultado.page,
+                    limit: resultado.limit,
+                    totalPages: resultado.totalPages,
+                    hasNextPage: resultado.hasNextPage,
+                    hasPrevPage: resultado.hasPrevPage
+                }
             })
         } catch (error: any) {
             console.error('[projetosController] Erro ao listar projetos:', error)

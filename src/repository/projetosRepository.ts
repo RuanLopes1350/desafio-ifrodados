@@ -8,10 +8,21 @@ class ProjetoRepository {
         this.projetoModel = new Projeto().model
     }
 
-    async listar() {
+    async listar(opcoesPaginacao: any = {}) {
         try {
-            const projetos = await this.projetoModel.find()
-            return projetos
+            const page = parseInt(opcoesPaginacao.page) || 1;
+            const limit = parseInt(opcoesPaginacao.limit) || 10;
+            const sort = opcoesPaginacao.sort || { dataLimiteInscricao: -1 };
+
+            const options = {
+                page,
+                limit,
+                sort,
+                lean: true
+            };
+
+            const resultado = await (this.projetoModel as any).paginate({}, options);
+            return resultado;
         } catch (error) {
             console.error('[projetosRepository] Erro ao listar projetos:', error)
             throw error

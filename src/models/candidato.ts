@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 import { ICandidato, IProjetosAcademicosCandidato, IProjetosProfissionaisCandidato } from '../interface/models';
 
 class Candidato {
@@ -28,6 +29,8 @@ class Candidato {
             avaliacao: { type: Number, required: false },
             statusInscricao: { type: String, required: false, enum: ['Pendente', 'Aprovado', 'Rejeitado'], default: 'Pendente' }
         });
+
+        candidatoSchema.plugin(mongoosePaginate);
         this.model = mongoose.models.Candidato || mongoose.model('Candidato', candidatoSchema);
     }
 }

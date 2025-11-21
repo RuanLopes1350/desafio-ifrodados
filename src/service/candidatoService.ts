@@ -24,10 +24,10 @@ class CandidatoService {
         }
     }
 
-    async listar(filtros: any) { 
+    async listar(filtros: any, opcoesPaginacao: any = {}) {
         try {
-            const candidatos = await this.repository.listar(filtros)
-            return candidatos
+            const resultado = await this.repository.listar(filtros, opcoesPaginacao)
+            return resultado
         } catch (error) {
             console.error('[candatoService] Erro ao listar candidatos:', error)
             throw error

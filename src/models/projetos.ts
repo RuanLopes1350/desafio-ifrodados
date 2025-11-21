@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import mongoosePaginate from 'mongoose-paginate-v2';
 import { IProjeto } from '../interface/models';
 
 class Projeto {
@@ -11,6 +12,8 @@ class Projeto {
             instituicaoCliente: { type: String, required: true },
             coordenador: { type: String, required: true }
         })
+
+        projetoSchema.plugin(mongoosePaginate);
         this.model = mongoose.models.Projeto || mongoose.model('Projeto', projetoSchema);
     }
 }
